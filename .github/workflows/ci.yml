@@ -5,12 +5,11 @@ on:
      - '**'
 jobs:
  build:
+   name: Maven Build
    runs-on: ubuntu-latest
    steps:
      - uses: actions/checkout@v5
-     - name: Set up Python
+     - name: Setup Python3
        uses: actions/setup-python@v5
        with:
-         python-version: '3.x'
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+         python-version: 3.11
