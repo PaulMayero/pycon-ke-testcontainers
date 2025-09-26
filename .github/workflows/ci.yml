@@ -18,6 +18,8 @@ jobs:
          curl https://rclone.org/install.sh | sudo bash
      - name: Check rclone version
        run: rclone version
+     - name: Check Docker
+       run: docker --version
      -  name: Run unittests
         run: python3 -m unittest discover tests/unit
      -  name: Run integration tests
