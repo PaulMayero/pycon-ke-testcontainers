@@ -13,6 +13,10 @@ jobs:
        uses: actions/setup-python@v5
        with:
          python-version: 3.11
+     - name: Install test_container minio
+       run: |
+         python -m pip install --upgrade pip
+         pip install pip install testcontainers[minio]
      - name: Install rclone
        run: |
          curl https://rclone.org/install.sh | sudo bash
