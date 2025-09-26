@@ -6,7 +6,7 @@ import tempfile
 import unittest
 import os
 import configparser
-import stat
+import shutil
 
 
 from push_file_to_object_storage import copy_object_to_s3_storage
@@ -29,15 +29,6 @@ def mkdir_testfiles(localmodule, test):
     testdir = testroot / unittest.TestCase.id(test)
     testdir.mkdir(exist_ok=True)
     return Path(tempfile.mkdtemp(dir=testdir))
-
-def docker_exists():
-    docker_command = "docker info"
-    try:
-        subprocess.check_output(shlex.split(docker_command))
-    except Exception:
-        return False
-    else:
-        return True
     
 
 class IntegrationTest(unittest.TestCase):
@@ -50,7 +41,7 @@ class IntegrationTest(unittest.TestCase):
     def tearDown(self):
         self._td.cleanup()
 
-    @unittest.skipUnless(docker_exists(), "Docker is not available")
+    @unittest.skipUnless(shutil.which('docker'), 'requires Docker')
     def test_copy_object_to_s3_storage_with_rclone_and_minio(self):
         # This test shows how a file can be copied to s3 without using mocks
         try:
@@ -68,13 +59,6 @@ class IntegrationTest(unittest.TestCase):
             fake_file = "sample.txt"
             with open(fake_file, "w") as fp:
                 fp.write('this is a text file for testing')
-
-            #os.chdir(self.testdir)
-            #repo_section = 'repo'
-            #repo = Path(repo_section)
-            #repo.mkdir(parents=True, exist_ok=True)
-            #shutil.copy(basedir / 'SpeedoMeterApp.main_1.apk', repo)
-            #shutil.copy(basedir / 'repo/index-v2.json', repo)
 
             # write out config for test use
             rclone_config = configparser.ConfigParser()
@@ -99,23 +83,12 @@ class IntegrationTest(unittest.TestCase):
 
 
             # setup parameters for this test run
-            # s3_bucket = 'test_bucket_folder'
             object = fake_file
             rclone_config = "test-minio-config"
             path_to_rclone_config = str(rclone_file)
 
             # call function
             copy_object_to_s3_storage(awsbucket, object, rclone_config, path_to_rclone_config)
-
-
-
-            #deploy.config['awsbucket'] = awsbucket
-            #deploy.config['rclone_config'] = "test-minio-config"
-            #deploy.config['path_to_custom_rclone_config'] = str(rclone_file)
-            #common.options = VerboseFalseOptions
-
-            # call function
-            #deploy.update_remote_storage_with_rclone(repo_section, awsbucket)
 
             # check if apk and index file are available
             bucket_content = client.list_objects('test-bucket', recursive=True)
