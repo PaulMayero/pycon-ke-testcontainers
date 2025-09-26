@@ -30,8 +30,14 @@ def mkdir_testfiles(localmodule, test):
     testdir.mkdir(exist_ok=True)
     return Path(tempfile.mkdtemp(dir=testdir))
 
-def docker_exists(path="/var/run/docker.sock"):
-    return os.path.exists(path) and stat.S_ISSOCK(os.stat(path).st_mode)
+def docker_exists():
+    docker_command = "docker info"
+    try:
+        subprocess.check_output(shlex.split(docker_command))
+    except Exception:
+        return False
+    else:
+        return True
     
 
 class IntegrationTest(unittest.TestCase):
