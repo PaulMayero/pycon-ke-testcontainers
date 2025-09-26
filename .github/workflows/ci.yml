@@ -5,7 +5,7 @@ on:
      - '**'
 jobs:
  build:
-   name: Maven Build
+   name: run Tests in CI
    runs-on: ubuntu-latest
    steps:
      - uses: actions/checkout@v5
