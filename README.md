@@ -25,8 +25,11 @@ python3 -m unittest discover tests/unit
 The integration test can be run with the command
 
 ```bash
+virtualenv3 venv/ && source venv/bin/activate && pip install testcontainers[minio]
 python3 -m unittest discover tests/integration
 ```
+
+
 
 ## Contributing
 
