@@ -68,13 +68,6 @@ class IntegrationTest(unittest.TestCase):
             with open(fake_file, "w") as fp:
                 fp.write('this is a text file for testing')
 
-            #os.chdir(self.testdir)
-            #repo_section = 'repo'
-            #repo = Path(repo_section)
-            #repo.mkdir(parents=True, exist_ok=True)
-            #shutil.copy(basedir / 'SpeedoMeterApp.main_1.apk', repo)
-            #shutil.copy(basedir / 'repo/index-v2.json', repo)
-
             # write out config for test use
             rclone_config = configparser.ConfigParser()
             rclone_config.add_section("test-minio-config")
@@ -96,27 +89,13 @@ class IntegrationTest(unittest.TestCase):
             # set up config for run
             awsbucket = "test-bucket"
 
-
             # setup parameters for this test run
-            # s3_bucket = 'test_bucket_folder'
             object = fake_file
             rclone_config = "test-minio-config"
             path_to_rclone_config = str(rclone_file)
 
             # call function
             copy_object_to_s3_storage(awsbucket, object, rclone_config, path_to_rclone_config)
-
-
-
-            #deploy.config['awsbucket'] = awsbucket
-            #deploy.config['rclone_config'] = "test-minio-config"
-            #deploy.config['path_to_custom_rclone_config'] = str(rclone_file)
-            #common.options = VerboseFalseOptions
-
-            # call function
-            #deploy.update_remote_storage_with_rclone(repo_section, awsbucket)
-
-            # check if apk and index file are available
             bucket_content = client.list_objects('test-bucket', recursive=True)
             files_in_bucket = {obj.object_name for obj in bucket_content}
             print(files_in_bucket)
