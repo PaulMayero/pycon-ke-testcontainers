@@ -19,14 +19,16 @@ and [Rclone](https://rclone.org/) are installed on your system.
 Once the repo has been cloned, the unit tests can be run with the command
 
 ```bash
-python3 -m unittest discover tests/unit
+python3 -m unittest discover tests/unit -v
 ```
 
 The integration test can be run with the command
 
 ```bash
-virtualenv3 venv/ && source venv/bin/activate && pip install testcontainers[minio]
-python3 -m unittest discover tests/integration
+virtualenv3 venv/
+source venv/bin/activate
+pip install testcontainers[minio]
+python3 -m unittest discover tests/integration -v
 ```
 
 

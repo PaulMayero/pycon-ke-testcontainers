@@ -6,7 +6,7 @@ def copy_object_to_s3_storage(bucket, object, rclone_config, path_to_rclone_conf
     """
     Upload an object on file path to S3 Storage
     bucket -> S3 storage bucket
-    object -> object to push to bucket
+    object -> File to push to bucket
     rclone_config -> using default rclone config at /.config/rclone/rclone.conf
     """
     # get pwd
@@ -15,7 +15,7 @@ def copy_object_to_s3_storage(bucket, object, rclone_config, path_to_rclone_conf
     if os.path.exists(complete_object_path):
         object_path = complete_object_path
     else:
-        raise Exception("Object not found in path")
+        raise Exception("File not found")
 
     # get path to default rclone config
     if path_to_rclone_config is None:
@@ -38,9 +38,10 @@ def copy_object_to_s3_storage(bucket, object, rclone_config, path_to_rclone_conf
     print(cmd)
     if subprocess.call(cmd) != 0:
         raise Exception("Failed to push object to Bucket")
+    print(f"Success! You have backed up {object} on {bucket}. Your data is safe!")
 
 if __name__ == "__main__":
-    copy_object_to_s3_storage("pyconketest", "app.apk","b2-config-pycon-ke")
+    copy_object_to_s3_storage("pycon-namibia", "app.apk","pycon-namibia-config")
 
 
 
