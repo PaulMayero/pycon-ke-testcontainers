@@ -41,7 +41,7 @@ def copy_object_to_s3_storage(bucket, object, rclone_config, path_to_rclone_conf
     print(f"Success! You have backed up {object} on {bucket}. Your data is safe!")
 
 if __name__ == "__main__":
-    copy_object_to_s3_storage("pycon-namibia", "app.apk","pycon-namibia-config")
+    copy_object_to_s3_storage("pycon-namibia", "qr-code.png","pycon-namibia-config")
 
 
 
