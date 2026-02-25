@@ -31,7 +31,12 @@ pip install testcontainers[minio]
 python3 -m unittest discover tests/integration -v
 ```
 
-
+The repository has support for [Github Actions](https://github.com/features/actions)
+that run on push.
+To run Github actions locally, use [act](https://nektosact.com/).  
+Install act as per this
+[documentation](https://nektosact.com/installation/index.html).  
+Once the installation is complete, at the root of this repository run ```act```
 
 ## Contributing
 
