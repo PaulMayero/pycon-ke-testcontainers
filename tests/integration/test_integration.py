@@ -37,7 +37,7 @@ def docker_exists():
         return False
     else:
         return True
-    
+
 
 class IntegrationTest(unittest.TestCase):
 
@@ -53,10 +53,10 @@ class IntegrationTest(unittest.TestCase):
     def test_copy_object_to_s3_storage_with_rclone_and_minio(self):
         # This test shows how a file can be copied to s3 without using mocks
         try:
-            from testcontainers.minio import MinioContainer
+            from testcontainers.community.minio import MinioContainer
         except ImportError:
             self.skipTest('Requires testcontainers.minio to run')
-        with MinioContainer(image="quay.io/minio/minio:latest") as minio:
+        with MinioContainer(image="pgsty/minio:latest") as minio:
             # Set up minio bukcet
             client = minio.get_client()
             client.make_bucket('test-bucket')
